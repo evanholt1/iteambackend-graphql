@@ -31,28 +31,44 @@ module.exports = {
     }
   },
   Mutation: {
-    addCourseNotebook: async (_, args) => {
-      const course = await Course.findById(args.courseId).exec();
-      args.notebookInsertionInput.url = args.notebookInsertionInput.url.host;
-      course.notebooks.push(args.notebookInsertionInput);
+    addCourseNotebooks: async (_, { courseId, notebookInsertionInputs }) => {
+      const course = await Course.findById(courseId).exec();
+      
+      for (let i = 0; i < notebookInsertionInputs.length; i++) {
+        notebookInsertionInputs[i].url = notebookInsertionInputs[i].url.host
+        course.notebooks.push(notebookInsertionInputs[i]);
+      }
+      
       await course.save();
-      return course.notebooks[course.notebooks.length - 1];
+      return course.notebooks;
+    },
+    // edit this to allow an array 
+    editCourseNotebooks: async (_, {courseId, notebookEditInputs} ) => {
+      const course = await Course.findById(courseId).exec();
+
+      let updatedNotebooks = [];
+      notebookEditInputs.forEach(notebookEdit => {
+        const notebook = course.notebooks.id(notebookEdit._id);
+        updatedNotebooks.push(notebook);
+        notebook.set(notebookEdit);
+      });
+      //const notebook = await course.notebooks.id(notebookEditInput._id);
+      //notebook.set(notebookEditInput);
+      course.save();
+      return updatedNotebooks;
     },
 
-    editCourseNotebook: async (_, {courseId, notebookEditInput} ) => {
+    deleteCourseNotebooks: async (_, { courseId, ids }) => {
       const course = await Course.findById(courseId).exec();
-      const notebook = await course.notebooks.id(notebookEditInput._id);
-      notebook.set(notebookEditInput);
-      course.save();
-      return notebook;
-    },
 
-    deleteCourseNotebook: async (_, { courseId, id }) => {
-      const course = await Course.findById(courseId).exec();
-      const notebook = course.notebooks.id(id);
-      notebook.remove();
+      let deletedNotebooks = [];
+      ids.forEach(id => {
+        const notebook = course.notebooks.id(id);
+        deletedNotebooks.push(notebook);
+        notebook.remove();
+      })
       course.save();
-      return notebook;
+      return deletedNotebooks;
     }
   }
 }

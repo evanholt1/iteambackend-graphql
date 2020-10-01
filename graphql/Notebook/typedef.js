@@ -9,9 +9,9 @@ extend type Query {
 }
 
 extend type Mutation {
-  addCourseNotebook(courseId:ID!,notebookInsertionInput:NotebookInsertionInput!): Notebook!
-  editCourseNotebook(courseId:ID!,notebookEditInput:NotebookEditInput!): Notebook!
-  deleteCourseNotebook(courseId:ID!,id:ID!): Notebook!
+  addCourseNotebooks(courseId:ID!,notebookInsertionInputs:[NotebookInsertionInput!]!): [Notebook!]!
+  editCourseNotebooks(courseId:ID!,notebookEditInputs:[NotebookEditInput!]!): [Notebook!]!
+  deleteCourseNotebooks(courseId:ID!,ids:[ID!]!): [Notebook!]!
 }
 
 type Notebook {

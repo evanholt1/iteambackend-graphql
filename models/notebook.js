@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 let NotebookSchema = new  mongoose.Schema({
     title: {
         type: String,
-        maxlength: 32,
+        maxlength: 50,
         required: true
     },
     description: {
