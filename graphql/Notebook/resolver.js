@@ -42,7 +42,7 @@ module.exports = {
       await course.save();
       return course.notebooks;
     },
-    // edit this to allow an array 
+    // important: using object.keys() can be a logical replacement to .set()
     editCourseNotebooks: async (_, {courseId, notebookEditInputs} ) => {
       const course = await Course.findById(courseId).exec();
 
