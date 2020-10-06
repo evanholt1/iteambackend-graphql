@@ -1,8 +1,6 @@
 const { gql } = require('apollo-server-express');
 
 module.exports = gql`
-scalar URL
-
 extend type Query {
   courseExam(courseId:ID!,id:ID!): Exam!
   courseExams(courseId:ID!): [Exam!]!

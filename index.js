@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const { ApolloServer } = require('apollo-server-express');
 
 // file imports
-const { typeDefs, resolvers } = require('./utils/genGraphqlSchema');
+const { typeDefs, resolvers, context } = require('./utils/genGraphqlSchema');
 
 
 const startServer = async () => {
@@ -21,6 +21,7 @@ const startServer = async () => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    context
   });
 
   server.applyMiddleware({ app });

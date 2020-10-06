@@ -1,7 +1,7 @@
 const { isValidObjectId } = require('mongoose');
 const { UserInputError } = require('apollo-server-express')
 
-const Course = require('../../models/course');
+const Course = require('../../../models/course');
 
 
 module.exports = {

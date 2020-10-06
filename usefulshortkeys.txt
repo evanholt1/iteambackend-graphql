@@ -1,0 +1,13 @@
+lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum
+
+alt+z : toggle word wrap
+shift+alt+rightArrow: selects bigger and bigger stuff (try starting from a property)
+shift+ctrl+\: goes to other matching bracket (very useful for findind ending/opening bracket/{ })
+alt+leftClick on a place: adds another cursor there. allows you to have multiple cursors and write  
+                          on multiple places at the same time.
+shift+alt+leftClick: like before but square selection        
+ctrl+f2(vscode): allows you to modify all occurences of selection (faster find & replace)        
+alt+arrow(up/down): moves line          
+ctrl+arrow(up/down): scrolls page
+shit+alt+arrow(up/down):duplicates a line up or down
+crl+backspace : deletes word behind cursor

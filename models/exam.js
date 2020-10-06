@@ -25,10 +25,10 @@ let ExamSchema = new  mongoose.Schema({
 });
 
 // types of questions in the questions array:
-ExamSchema.path('questions').discriminator("mcq",mcqSchema);
-ExamSchema.path('questions').discriminator("tfq",tfqSchema);
-ExamSchema.path('questions').discriminator("match",matchSchema);
-ExamSchema.path('questions').discriminator("essay",essaySchema);
+ExamSchema.path('questions').discriminator("MCQ",mcqSchema);
+ExamSchema.path('questions').discriminator("TFQ",tfqSchema);
+ExamSchema.path('questions').discriminator("MATCH",matchSchema);
+ExamSchema.path('questions').discriminator("ESSAY",essaySchema);
 
 
 module.exports = ExamSchema;

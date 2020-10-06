@@ -1,21 +1,15 @@
-const { isValidObjectId } = require('mongoose');
-const { UserInputError } = require('apollo-server-express')
-
-const Course = require('../../models/course');
+// file imports
+const Course = require('../../../models/course');
 
 
 module.exports = {
   Query : {
-    course: async (_, args) => {
-      if (!isValidObjectId(args.id)) {
-        throw new UserInputError('id field is not a proper objectId', {
-          invalidArgs: Object.keys(args),
-        });
-      }
-      return Course.findById(args.id).lean().exec();
+    course: async (_, { id }, context) => {
+      return context.models.Course.getOne(id);
     },
     courses: () => {
-      return Course.find().lean().exec();
+      return context.models.Course.getAll();
+      
     }
   },
   Mutation : {
