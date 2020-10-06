@@ -4,15 +4,14 @@ module.exports = gql`
 scalar URL
 
 extend type Query {
-  notebook: Notebook
   course(id:ID!): Course
-  courses: [Course]
+  courses(limit:Int,after:ID): [Course]
 }
 
 extend type Mutation {
-  insertCourse(courseInput: CourseInsertionInput!): Course!
-  editCourse(courseInput:CourseEditInput!): Course!
-  deleteCourse(id:ID!): Course!
+  addCourses(courseInsertionInputs: [CourseInsertionInput]!): [Course!]!
+  editCourses(courseEditInput:[CourseEditInput!]!): [Course!]!
+  deleteCourses(ids:[ID!]!): [Course!]!
 }
 
 type Course {

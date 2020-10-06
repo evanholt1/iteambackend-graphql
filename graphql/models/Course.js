@@ -17,6 +17,19 @@ module.exports =  generateUserModel = () => ({
   getAll: () => { 
     return Course.find().lean().exec();
    },
-  getById: (id) => { /* fetching/transform logic for a single user */ },
-  getByGroupId: (id) => { /* fetching/transform logic for a group of users */ },
+  getMany: (limit, after) => {
+    if(!limit)
+      return Course.find().exec();
+    if(!after) 
+      return Course.find().limit(limit).exec();
+    return Course.find({ _id: { $gt:after } } ).limit(limit).exec();
+  },
+
+  // *****           *****
+  // ***** mutations *****
+  // *****           *****
+
+  addMany: (coursesInputs) => {
+    return Course.create(coursesInputs); // create accepts an array, and deals with it properly
+  }
  });

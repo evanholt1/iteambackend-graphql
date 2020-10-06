@@ -7,23 +7,25 @@ module.exports = {
     course: async (_, { id }, context) => {
       return context.models.Course.getOne(id);
     },
-    courses: () => {
-      return context.models.Course.getAll();
+    courses: (_, { limit, after } , context) => {
+      //return context.models.Course.getAll();
+      return context.models.Course.getMany(limit, after);
       
     }
   },
   Mutation : {
-    insertCourse : (_,args) => {
-      return Course.create(args.CourseInsertionInput);
+    addCourses : (_,{ courseInsertionInputs }, context) => {
+      return context.models.Course.addMany(courseInsertionInputs);
+      //return Course.create(args.CourseInsertionInput);
     },
     // important: using object.keys() can be a logical replacement to .set()
-    editCourse: async(_, args) => {
+    editCourses: async(_, args) => {
       const course = await Course.findById(args.courseInput._id).exec();
       course.set(args.courseInput);
       await course.save();
       return course;
     },
-    deleteCourse: (_,args) => {
+    deleteCourses: (_,args) => {
       return Course.findByIdAndDelete(args.id).exec();
     }
   }
