@@ -15,7 +15,8 @@ const startServer = async () => {
   await mongoose.connect(process.env.DB_HOST, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: true
   });
 
   const server = new ApolloServer({

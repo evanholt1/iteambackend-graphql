@@ -10,7 +10,7 @@ extend type Query {
 
 extend type Mutation {
   addCourses(courseInsertionInputs: [CourseInsertionInput]!): [Course!]!
-  editCourses(courseEditInput:[CourseEditInput!]!): [Course!]!
+  editCourses(courseEditInputs:[CourseEditInput!]!): [Course!]!
   deleteCourses(ids:[ID!]!): [Course!]!
 }
 
