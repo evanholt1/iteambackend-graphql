@@ -3,9 +3,13 @@ const { gql } = require('apollo-server-express');
 module.exports = gql`
 scalar URL
 
+union CourseGetResult = Course | NotFound
+
+
 extend type Query {
-  course(id:ID!): Course
+  course(id:ID!): CourseGetResult
   courses(limit:Int,after:ID): [Course]
+  test: CourseGetResult 
 }
 
 extend type Mutation {
@@ -23,6 +27,10 @@ type Course {
   #testbanks: [Testbank]
   #exams: [Exam]
   notebooks: [Notebook!]!
+}
+
+type NotFound {
+  message: String!
 }
 
 input CourseInsertionInput {

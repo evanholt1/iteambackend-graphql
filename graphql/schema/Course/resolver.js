@@ -10,11 +10,17 @@ module.exports = {
 
     courses: (_, { limit, after } , context) => {
       return context.models.Course.getMany(limit, after);
+    },
+    test : () => {
+      return {
+        __typename:"NotFound",
+        message:"found"
+      }
     }
   },
   Mutation : {
     addCourses : (_,{ courseInsertionInputs }, context) => {
-      return context.models.Course.addMany(courseInsertionInputs);
+      return context.models.Course.addMany(courseInsertionInputs, context.user);
     },
 
     // important: using object.keys() can be a logical replacement to .set()

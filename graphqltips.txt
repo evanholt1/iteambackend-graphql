@@ -1,0 +1,26 @@
+instead of having a __resolveType and differentiating based on fields which might be similar, you can
+just return an object with __typeName set directly. useful.
+e.x:
+
+sdl:
+union CourseGetResult = Found | NotFound
+
+resolver:
+courses: () => {
+    return {
+        __typename:"NotFound",
+        message:"found"
+    } 
+}
+this might cause a warning though. to fix that:
+ const schema = makeExecutableSchema({
+    typeDefs,
+    resolvers,
+    resolverValidationOptions: { requireResolversForResolveType: false },
+  });
+
+  const server = new ApolloServer({
+    schema,
+    context
+  });
+

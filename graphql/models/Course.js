@@ -5,19 +5,29 @@ const { UserInputError } = require('apollo-server-express')
 // file imports
 const Course = require('../../models/course');
 
-module.exports =  generateUserModel = () => ({
+module.exports =  generateCourseModel = (session) => ({
   
   // ***** ******* *****
   // ***** Queries *****
   // ***** ******* *****
 
-  getOneById: (id) => {
+  getOneById: async (id) => {
     if (!isValidObjectId(id)) {
       throw new UserInputError('id field is not a proper objectId', {
         invalidArgs: Object.keys(id),
       });
     }
-    return Course.findById(id).lean().exec();
+
+    const course = await Course.findById(id).lean().exec();
+    
+    if(!course)
+      return {
+        __typename:"NotFound",
+        message: "No Course Found!"
+      }
+
+    course.__typename = "Course";
+    return course;
   },
 
   getMany: (limit, after) => {
@@ -26,7 +36,7 @@ module.exports =  generateUserModel = () => ({
     if(!after) 
       return Course.find().limit(limit).lean().exec();
 
-    let courses = Course.find({ _id: { $gt:after } } ).limit(limit).lean().exec();
+    let courses = Course.find({ _id: { $gt:after } }).limit(limit).lean().exec();
     
     // if an _id was deleted, find the documents after the _id just before the one deleted, returning the same results.
     while(!courses)
@@ -39,7 +49,15 @@ module.exports =  generateUserModel = () => ({
   // ***** mutations *****
   // *****           *****
 
-  addMany: async (coursesInputs) => {
+  addMany: async (coursesInputs,user) => {
+    if(!user) 
+      return null;
+
+    
+
+    if(user.role !== "EDITOR" && user.role !== "ADMIN")
+      return null;
+
     let courses = []; 
 
     let coursesAdded = await Course.create(coursesInputs); // create accepts an array, and deals with it properly
@@ -74,5 +92,5 @@ module.exports =  generateUserModel = () => ({
 
     return coursesToDelete;
   }
-  
+
 });

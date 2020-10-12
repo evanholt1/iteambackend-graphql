@@ -26,8 +26,8 @@ var userSchema = new Schema({
   },
   role: {
     type: String,
-    default: "user",
-    enum:["user","admin"]
+    default: "USER",
+    enum:["USER","EDITOR","ADMIN"]
   },
   // stores the courses' data that the user watches, along his exam grades
   courses: [{
